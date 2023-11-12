@@ -8,6 +8,18 @@ import {
 import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import Query from '@arcgis/core/rest/support/Query';
 import { view } from './Scene';
+import { DropDown } from './customClass';
+
+// test
+const test = new DropDown({
+  featureLayer: utilityPointLayer,
+  fieldName1: 'CP',
+  fieldName2: 'Company',
+  fieldName3: 'Type',
+});
+test.dropDownQuery().then((response: any) => {
+  console.log(response);
+});
 
 // For dropdown list
 // 3 variables: CP, company, and type
