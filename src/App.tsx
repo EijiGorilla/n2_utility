@@ -22,8 +22,9 @@ import {
   CalciteList,
   CalciteListItem,
 } from '@esri/calcite-components-react';
-import { dropdownQuery } from './Query';
 import Chart from './components/Chart';
+import { DropDownData } from './customClass';
+import { utilityLineLayer, utilityPointLayer } from './layers';
 
 function App() {
   const mapDiv = useRef(null);
@@ -38,21 +39,7 @@ function App() {
   const [underground, setUnderground] = useState<boolean>(false);
 
   // For dropdown filter
-  const [initContractPacakgeCompType, setInitContractPacakgeCompType] = useState([
-    {
-      cp: '',
-      company: [
-        {
-          name: '',
-          type: [
-            {
-              typeName: '',
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  const [initContractPacakgeCompType, setInitContractPacakgeCompType] = useState([]);
 
   const [contractPackage, setContractPackage] = useState(null);
   const [company, setCompany] = useState(null);
@@ -64,44 +51,16 @@ function App() {
 
   // Create dropdown list//
   useEffect(() => {
-    dropdownQuery().then((response: any) => {
-      // 1. unique value for cp
-      const uniqueCP = response
-        .map((item: any) => item.cp)
-        .filter((cp: any, index: any, emp: any) => emp.indexOf(cp) === index);
+    const dropdownData = new DropDownData({
+      featureLayer1: utilityPointLayer,
+      featureLayer2: utilityLineLayer,
+      fieldName1: 'CP',
+      fieldName2: 'Company',
+      fieldName3: 'Type',
+    });
 
-      // 2. Compile for each CP
-      // eslint-disable-next-line array-callback-return
-      const finalArray = uniqueCP.map((contp: any, index: number) => {
-        // 2.1. unique vales for company corresponding to each CP
-        const filteredCp = response.filter((emp: any) => emp.cp === contp);
-        const uniqueCompany = filteredCp
-          .map((item: any) => item.company)
-          .filter((company: any, index: any, emp: any) => emp.indexOf(company) === index);
-
-        // 2.2. unique values for corresponding Type to each CP and each company
-        const companyType = uniqueCompany.map((comp: any, index: any) => {
-          // 2.2.1. Find type(s) corresponding to each CP and company
-          const filtered = response.filter((emp: any) => emp.cp === contp && emp.company === comp);
-          const types = filtered.map((item: any, index: number) => item.type);
-
-          // 2.2.2. Check a pair of CP and Company has one type or both types (point and line)
-          return Object.assign({
-            name: comp,
-            type:
-              types.length === 1
-                ? [{ typeName: types }]
-                : [{ typeName: types[0] }, { typeName: types[1] }],
-          });
-        });
-
-        return Object.assign({
-          cp: contp,
-          company: companyType,
-        });
-      });
-
-      setInitContractPacakgeCompType(finalArray);
+    dropdownData.dropDownQuery().then((response: any) => {
+      setInitContractPacakgeCompType(response);
     });
   }, []);
 
