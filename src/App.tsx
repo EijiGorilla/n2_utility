@@ -52,11 +52,8 @@ function App() {
   // Create dropdown list//
   useEffect(() => {
     const dropdownData = new DropDownData({
-      featureLayer1: utilityPointLayer,
-      featureLayer2: utilityLineLayer,
-      fieldName1: 'CP',
-      fieldName2: 'Company',
-      fieldName3: 'Type',
+      featureLayers: [utilityPointLayer, utilityLineLayer],
+      fieldNames: ['CP', 'Company', 'Type'],
     });
 
     dropdownData.dropDownQuery().then((response: any) => {
