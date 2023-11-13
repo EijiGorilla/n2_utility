@@ -41,12 +41,12 @@ function App() {
   // For dropdown filter
   const [initContractPacakgeCompType, setInitContractPacakgeCompType] = useState([]);
 
-  const [contractPackage, setContractPackage] = useState(null);
+  const [contractPackage, setContractPackage] = useState<any>(null);
   const [company, setCompany] = useState(null);
   const [type, setType] = useState<null | undefined | string>(null);
 
   const [companyList, setCompanyList] = useState([]);
-  const [typeList, setTypeList] = useState();
+  const [typeList, setTypeList] = useState([]);
   const [companySelected, setCompanySelected] = useState({ name: '' });
 
   // Create dropdown list//
@@ -66,7 +66,7 @@ function App() {
 
   const handleContractPackageChange = (obj: any) => {
     setContractPackage(obj);
-    setCompanyList(obj.company);
+    setCompanyList(obj.field2);
     setCompany(null);
     setCompanySelected(obj);
     setType(null);
@@ -75,7 +75,7 @@ function App() {
   const handleCompanyChange = (obj: any) => {
     setCompanySelected(obj);
     setCompany(obj);
-    setTypeList(obj.type);
+    setTypeList(obj.field3);
     setType(null);
   };
 
@@ -139,13 +139,13 @@ function App() {
     }),
     singleValue: (defaultStyles: any) => ({ ...defaultStyles, color: '#fff' }),
   };
-  //          <Chart contractp={contractPackageSelected.cp} company={companySelected.name} type={type === null ? '' : type}/>
+
   return (
     <>
       <CalciteShell>
         <CalciteTabs slot="panel-end" style={{ width: '25vw' }}>
           <Chart
-            contractp={contractPackage === null ? '' : contractPackage}
+            contractp={contractPackage === null ? '' : contractPackage.field1}
             company={companySelected.name}
             type={type === null ? '' : type}
             typelist={typeList}
@@ -174,7 +174,7 @@ function App() {
                 value={contractPackage}
                 options={initContractPacakgeCompType}
                 onChange={handleContractPackageChange}
-                getOptionLabel={(x: any) => x.cp}
+                getOptionLabel={(x: any) => x.field1}
                 styles={customstyles}
               />
               <br />
@@ -194,7 +194,7 @@ function App() {
                 value={type}
                 options={typeList}
                 onChange={handleTypeChange}
-                getOptionLabel={(x: any) => x.typeName}
+                getOptionLabel={(x: any) => x.name}
                 styles={customstyles}
               />
             </div>

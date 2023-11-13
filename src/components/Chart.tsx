@@ -30,7 +30,7 @@ function maybeDisposeRoot(divId: any) {
 }
 
 // Draw chart
-const Chart = ({ contractp, company, type, typelist }: any) => {
+const Chart = ({ contractp, company, type }: any) => {
   const legendRef = useRef<unknown | any | undefined>({});
   const chartRef = useRef<unknown | any | undefined>({});
   const [chartData, setChartData] = useState([]);
@@ -42,11 +42,8 @@ const Chart = ({ contractp, company, type, typelist }: any) => {
   const [pointFeatureLayer, setPointFeatureLayer] = useState<FeatureLayer>(utilityPointLayer1);
   const [lineFeatureLayer, setLineFeatureLayer] = useState<FeatureLayer>(utilityLineLayer1);
 
-  const dataType = Array.isArray(type.typeName);
-  const typeName = dataType === true ? type.typeName[0] : type.typeName;
-
   useEffect(() => {
-    if (typeName === 'Point') {
+    if (type.name === 'Point') {
       generateUtilPointChartData({ contractp, company }).then((response: any) => {
         setChartData(response);
       });
@@ -56,7 +53,7 @@ const Chart = ({ contractp, company, type, typelist }: any) => {
       });
 
       setFeatureLayer(utilityPointLayer1);
-    } else if (typeName === 'Line') {
+    } else if (type.name === 'Line') {
       generateUtilLineChartData({ contractp, company }).then((response: any) => {
         setChartData(response);
       });
@@ -66,7 +63,7 @@ const Chart = ({ contractp, company, type, typelist }: any) => {
       });
 
       setFeatureLayer(utilityLineLayer1);
-    } else if (typeName === undefined) {
+    } else if (type.name === undefined) {
       // Point + Line
       generatePointLineChartData({ contractp, company }).then((response: any) => {
         setChartData(response);
@@ -79,7 +76,7 @@ const Chart = ({ contractp, company, type, typelist }: any) => {
       setLineFeatureLayer(utilityLineLayer1);
       setPointFeatureLayer(utilityPointLayer1);
     }
-  }, [contractp, company, type, typeName]);
+  }, [contractp, company, type, type.name]);
 
   // type
   const types = [
@@ -320,7 +317,7 @@ const Chart = ({ contractp, company, type, typelist }: any) => {
         query.where = contractp.cp === undefined ? sqlExpression : sqlExpressionWithCP;
 
         // layerView filter and highlight
-        if (typeName === 'Point' || typeName === 'Line') {
+        if (type.name === 'Point' || type.name === 'Line') {
           let highlightSelect: any;
           view.when(() => {
             view.whenLayerView(featureLayer).then((layerView: any) => {
@@ -362,7 +359,7 @@ const Chart = ({ contractp, company, type, typelist }: any) => {
             });
           });
           // Point + Line
-        } else if (typeName === undefined) {
+        } else if (type.name === undefined) {
           //let arrLviews: any = [];
           view.when(() => {
             let highlightSelect: any;

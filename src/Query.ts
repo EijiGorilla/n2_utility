@@ -75,11 +75,11 @@ export async function generateUtilPointChartData({ contractp, company }: any) {
   ];
 
   // Query
-  const qCP = "CP = '" + contractp.cp + "'";
+  const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
 
-  const finalExpression = contractp.cp && !company ? qCP : qCpCompany;
+  const finalExpression = contractp && !company ? qCP : qCpCompany;
 
   query.where = finalExpression;
   utilityPointLayer.definitionExpression = finalExpression;
@@ -197,11 +197,11 @@ export async function generateUtilLineChartData({ contractp, company }: any) {
   ];
 
   // Query
-  const qCP = "CP = '" + contractp.cp + "'";
+  const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
 
-  const finalExpression = contractp.cp && !company ? qCP : qCpCompany;
+  const finalExpression = contractp && !company ? qCP : qCpCompany;
 
   query.where = finalExpression;
   utilityLineLayer.definitionExpression = finalExpression;
@@ -318,10 +318,10 @@ export async function generatePointLineChartData({ contractp, company }: any) {
   ];
 
   // Query
-  const qCP = "CP = '" + contractp.cp + "'";
+  const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
-  const finalExpression = contractp.cp && !company ? qCP : qCpCompany;
+  const finalExpression = contractp && !company ? qCP : qCpCompany;
 
   const layerVisibleTrue = () => {
     utilityLineLayer.visible = true;
@@ -330,7 +330,7 @@ export async function generatePointLineChartData({ contractp, company }: any) {
     utilityPointLayer1.visible = true;
   };
 
-  if (contractp.cp === undefined) {
+  if (contractp === '') {
     query.where = '1=1';
     utilityPointLayer.definitionExpression = '1=1';
     utilityPointLayer1.definitionExpression = '1=1';
@@ -452,10 +452,10 @@ export async function generateUtilPointProgress({ contractp, company }: any) {
 
   // Query
   var query = new Query();
-  const qCP = "CP = '" + contractp.cp + "'";
+  const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
-  const finalExpression = contractp.cp && !company ? qCP : qCpCompany;
+  const finalExpression = contractp && !company ? qCP : qCpCompany;
   query.where = finalExpression;
   query.outStatistics = [total_utilpoint_number, total_utilpoint_comp];
 
@@ -483,10 +483,10 @@ export async function generateUtilLineProgress({ contractp, company }: any) {
   });
 
   var query = new Query();
-  const qCP = "CP = '" + contractp.cp + "'";
+  const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
-  const finalExpression = contractp.cp && !company ? qCP : qCpCompany;
+  const finalExpression = contractp && !company ? qCP : qCpCompany;
   query.where = finalExpression;
   query.outStatistics = [total_utilline_number, total_utilline_comp];
 
@@ -514,12 +514,12 @@ export async function generateTotalProgress({ contractp, company }: any) {
   });
 
   var query = new Query();
-  const qCP = "CP = '" + contractp.cp + "'";
+  const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
-  const finalExpression = contractp.cp && !company ? qCP : qCpCompany;
+  const finalExpression = contractp && !company ? qCP : qCpCompany;
 
-  if (contractp.cp === undefined) {
+  if (contractp === '') {
     query.where = '1=1';
   } else {
     query.where = finalExpression;

@@ -120,18 +120,18 @@ export class DropDownData extends Accessor {
           // eslint-disable-next-line array-callback-return
           const field3Array = uniqueField3.map((field3: any, index: any) => {
             return Object.assign({
-              typeName: field3, // field3 = typeName (name?)
+              name: field3, // field3 = typeName (name?)
             });
           });
 
           return Object.assign({
             name: field2,
-            type: field3Array, // field3 = type
+            field3: field3Array, // field3 = type
           });
         });
         return Object.assign({
-          cp: field1, // field1 = cp
-          company: field2Array, // field2 = company
+          field1: field1, // field1 = cp
+          field2: field2Array, // field2 = company
         });
       });
       return field1Array;
