@@ -574,9 +574,9 @@ const utilityStatusRenderer = new UniqueValueRenderer({
 });
 
 const utilPointStatusTextSymbol = labelSymbol3DLine({
-  materialColor: 'black',
+  materialColor: 'white',
   fontSize: 10,
-  haloColor: [255, 255, 255, 0.7],
+  haloColor: [0, 0, 0, 0.7],
   haloSize: 0.4,
 });
 
