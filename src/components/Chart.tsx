@@ -301,7 +301,7 @@ const Chart = ({ contractp, company, type }: any) => {
 
         const sqlExpressionWithCP =
           "CP = '" +
-          contractp.cp +
+          contractp +
           "'" +
           ' AND ' +
           'UtilType = ' +
@@ -314,7 +314,7 @@ const Chart = ({ contractp, company, type }: any) => {
 
         // Define Query
         var query = featureLayer.createQuery();
-        query.where = contractp.cp === undefined ? sqlExpression : sqlExpressionWithCP;
+        query.where = contractp === undefined ? sqlExpression : sqlExpressionWithCP;
 
         // layerView filter and highlight
         if (type.name === 'Point' || type.name === 'Line') {
