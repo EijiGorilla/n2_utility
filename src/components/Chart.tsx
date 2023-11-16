@@ -360,6 +360,7 @@ const Chart = ({ contractp, company, type }: any) => {
           });
           // Point + Line
         } else if (type.name === undefined) {
+          console.log('type is undefined');
           //let arrLviews: any = [];
           view.when(() => {
             let highlightSelect: any;
@@ -367,7 +368,6 @@ const Chart = ({ contractp, company, type }: any) => {
               //arrLviews.push(layerView);
               pointFeatureLayer.queryFeatures(query).then((results: any) => {
                 if (results.features.length === 0) {
-                  console.log('no utility point');
                 } else {
                   const lengths = results.features;
                   const rows = lengths.length;
@@ -403,6 +403,14 @@ const Chart = ({ contractp, company, type }: any) => {
               });
               layerView.filter = new FeatureFilter({
                 where: contractp.cp === undefined ? sqlExpression : sqlExpressionWithCP,
+              });
+
+              // For initial state, we need to add this
+              view.on('click', () => {
+                layerView.filter = new FeatureFilter({
+                  where: undefined,
+                });
+                highlightSelect !== undefined ? highlightSelect.remove() : console.log('');
               });
             });
 
@@ -447,6 +455,14 @@ const Chart = ({ contractp, company, type }: any) => {
               });
               layerView.filter = new FeatureFilter({
                 where: contractp.cp === undefined ? sqlExpression : sqlExpressionWithCP,
+              });
+
+              // For initial state, we need to add this
+              view.on('click', () => {
+                layerView.filter = new FeatureFilter({
+                  where: undefined,
+                });
+                highlightSelect2 !== undefined ? highlightSelect2.remove() : console.log('');
               });
             });
           });
