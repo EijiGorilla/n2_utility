@@ -419,7 +419,6 @@ const Chart = ({ contractp, company, type }: any) => {
               let highlightSelect2: any;
               lineFeatureLayer.queryFeatures(query).then((results: any) => {
                 if (results.features.length === 0) {
-                  console.log('no utility point');
                 } else {
                   const lengths = results.features;
                   const rows = lengths.length;
