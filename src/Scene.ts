@@ -18,7 +18,7 @@ import {
   utilityLineLayer1,
   utilityPointLayer,
   utilityPointLayer1,
-  viaductLayer,
+  // viaductLayer,
 } from './layers';
 
 export const map = new Map({
@@ -40,7 +40,7 @@ const alignmentGroupLayer = new GroupLayer({
   layers: [pierHeadColumnLayerLayer, stationBoxLayer, chainageLayer, pierNoLayer, rowLayer], //stationLayer,
 });
 
-map.add(viaductLayer);
+// map.add(viaductLayer);
 map.add(alignmentGroupLayer);
 map.add(utilityGroupLayer);
 map.add(stationLayer);
@@ -74,7 +74,9 @@ export const layerList = new LayerList({
       };
     }
 
-    item.title === 'Chainage' || item.title === 'Viaduct' || item.title === 'Pier No'
+    item.title === 'Chainage' ||
+    // item.title === 'Viaduct' ||
+    item.title === 'Pier No'
       ? (item.visible = false)
       : (item.visible = true);
   },
