@@ -900,48 +900,48 @@ export const utilityLineLayer1 = new FeatureLayer({
 });
 
 // * Viaduct * //
-// const colorViaduct = [
-//   [225, 225, 225, 0.1], // To be Constructed (white)
-//   [130, 130, 130, 0.5], // Under Construction
-//   [255, 0, 0, 0.8], // Delayed
-//   [0, 112, 255, 0.8], // Completed
-// ];
+const colorViaduct = [
+  [225, 225, 225, 0.1], // To be Constructed (white)
+  [130, 130, 130, 0.5], // Under Construction
+  [255, 0, 0, 0.8], // Delayed
+  [0, 112, 255, 0.8], // Completed
+];
 
-// function renderViaductLayer() {
-//   const renderer = new UniqueValueRenderer({
-//     field: 'Status1',
-//   });
+function renderViaductLayer() {
+  const renderer = new UniqueValueRenderer({
+    field: 'Status1',
+  });
 
-//   for (var i = 0; i < colorViaduct.length; i++) {
-//     renderer.addUniqueValueInfo({
-//       value: i + 1,
-//       symbol: new MeshSymbol3D({
-//         symbolLayers: [
-//           new FillSymbol3DLayer({
-//             material: {
-//               color: colorViaduct[i],
-//               colorMixMode: 'replace',
-//             },
-//             edges: new SolidEdges3D({
-//               color: [225, 225, 225, 0.3],
-//             }),
-//           }),
-//         ],
-//       }),
-//     });
-//   }
-//   viaductLayer.renderer = renderer;
-// }
+  for (var i = 0; i < colorViaduct.length; i++) {
+    renderer.addUniqueValueInfo({
+      value: i + 1,
+      symbol: new MeshSymbol3D({
+        symbolLayers: [
+          new FillSymbol3DLayer({
+            material: {
+              color: colorViaduct[i],
+              colorMixMode: 'replace',
+            },
+            edges: new SolidEdges3D({
+              color: [225, 225, 225, 0.3],
+            }),
+          }),
+        ],
+      }),
+    });
+  }
+  viaductLayer.renderer = renderer;
+}
 
-// export const viaductLayer = new SceneLayer({
-//   portalItem: {
-//     id: '6b820b2c563c4e8c975c983543106634',
-//   },
-//   elevationInfo: {
-//     mode: 'absolute-height', //absolute-height, relative-to-ground
-//   },
-//   title: 'Viaduct',
-//   outFields: ['*'],
-// });
+export const viaductLayer = new SceneLayer({
+  portalItem: {
+    id: '6b820b2c563c4e8c975c983543106634',
+  },
+  elevationInfo: {
+    mode: 'absolute-height', //absolute-height, relative-to-ground
+  },
+  title: 'Viaduct',
+  outFields: ['*'],
+});
 
-// renderViaductLayer();
+renderViaductLayer();
