@@ -13,7 +13,7 @@ import {
   pierNoLayer,
   rowLayer,
   stationBoxLayer,
-  //stationLayer,
+  stationLayer,
   utilityLineLayer,
   utilityLineLayer1,
   utilityPointLayer,
@@ -43,6 +43,7 @@ const alignmentGroupLayer = new GroupLayer({
 map.add(viaductLayer);
 map.add(alignmentGroupLayer);
 map.add(utilityGroupLayer);
+map.add(stationLayer);
 
 export const view = new SceneView({
   container: undefined,

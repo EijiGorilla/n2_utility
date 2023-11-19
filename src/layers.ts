@@ -47,7 +47,7 @@ var chainageRenderer = new SimpleRenderer({
 
 export const chainageLayer = new FeatureLayer({
   portalItem: {
-    id: '590680d19f2e48fdbd8bcddce3aaedb5',
+    id: 'e47e9f4d475e4e24acad458a1428f3f9',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -92,7 +92,7 @@ var pierNoLabelClass = new LabelClass({
 
 export const pierNoLayer = new FeatureLayer({
   portalItem: {
-    id: '590680d19f2e48fdbd8bcddce3aaedb5',
+    id: 'e47e9f4d475e4e24acad458a1428f3f9',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -152,7 +152,7 @@ let stationBoxRenderer = new UniqueValueRenderer({
 
 export const stationBoxLayer = new FeatureLayer({
   portalItem: {
-    id: '590680d19f2e48fdbd8bcddce3aaedb5',
+    id: 'e47e9f4d475e4e24acad458a1428f3f9',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -193,7 +193,7 @@ let pierHeadColRenderer = new UniqueValueRenderer({
 
 export const pierHeadColumnLayerLayer = new FeatureLayer({
   portalItem: {
-    id: '590680d19f2e48fdbd8bcddce3aaedb5',
+    id: 'e47e9f4d475e4e24acad458a1428f3f9',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -211,7 +211,7 @@ export const pierHeadColumnLayerLayer = new FeatureLayer({
 // * PROW *//
 export const rowLayer = new FeatureLayer({
   portalItem: {
-    id: '590680d19f2e48fdbd8bcddce3aaedb5',
+    id: 'e47e9f4d475e4e24acad458a1428f3f9',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -223,28 +223,16 @@ export const rowLayer = new FeatureLayer({
 });
 
 // * Station Layer * //
-function IconSymbol(name: string) {
-  return new WebStyleSymbol({
-    name: name,
-    styleName: 'EsriIconsStyle', //EsriRealisticTransportationStyle, EsriIconsStyle
-  });
-}
-
-const stationRenderer = new UniqueValueRenderer({
-  field: 'Station',
-  defaultSymbol: IconSymbol('Train'),
-});
-
 const stationLayerTextSymbol = labelSymbol3DLine({
-  materialColor: 'orange',
-  fontSize: 30,
+  materialColor: '#d4ff33',
+  fontSize: 15,
   fontFamily: 'Ubuntu Mono',
   fontWeight: 'normal',
   haloColor: 'black',
-  haloSize: 0.7,
-  vOffsetScreenLength: 40,
-  vOffsetMaxWorldLength: 100,
-  vOffsetMinWorldLength: 20,
+  haloSize: 0.5,
+  vOffsetScreenLength: 100,
+  vOffsetMaxWorldLength: 700,
+  vOffsetMinWorldLength: 80,
 });
 
 var labelClass = new LabelClass({
@@ -256,25 +244,21 @@ var labelClass = new LabelClass({
   },
 });
 
-/*
-export const stationLayer = new SceneLayer({
+export const stationLayer = new FeatureLayer({
   portalItem: {
-    id: '207cb34b8a324b40985b5805862c4b29',
+    id: 'e47e9f4d475e4e24acad458a1428f3f9',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
+  layerId: 2,
   title: 'Station',
   labelingInfo: [labelClass],
-  renderer: stationRenderer,
   elevationInfo: {
-    // this elevation mode will place points on top of
-    // buildings or other SceneLayer 3D objects
     mode: 'relative-to-ground',
   },
 });
 stationLayer.listMode = 'hide';
-*/
 
 // * Utility Point * //
 function customSymbol3D(name: string) {
@@ -440,7 +424,7 @@ const utilPointSymbolRenderer = new UniqueValueRenderer({
 
 export const utilityPointLayer = new FeatureLayer({
   portalItem: {
-    id: '109d4ef09fd946d1bda17396f35deb94',
+    id: '8258f9a91c0e4b9997745fb0741e1c32',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -591,7 +575,7 @@ const utilPointStatusLabel = new LabelClass({
 
 export const utilityPointLayer1 = new FeatureLayer({
   portalItem: {
-    id: '109d4ef09fd946d1bda17396f35deb94',
+    id: '8258f9a91c0e4b9997745fb0741e1c32',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -729,7 +713,7 @@ const utilLineStatusRenderer = new UniqueValueRenderer({
 
 export const utilityLineLayer = new FeatureLayer({
   portalItem: {
-    id: '109d4ef09fd946d1bda17396f35deb94',
+    id: '8258f9a91c0e4b9997745fb0741e1c32',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -858,7 +842,7 @@ const utilityLineLabelClass = new LabelClass({
 
 export const utilityLineLayer1 = new FeatureLayer({
   portalItem: {
-    id: '109d4ef09fd946d1bda17396f35deb94',
+    id: '8258f9a91c0e4b9997745fb0741e1c32',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
