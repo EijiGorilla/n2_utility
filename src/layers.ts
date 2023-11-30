@@ -935,7 +935,7 @@ function renderViaductLayer() {
 
 export const viaductLayer = new SceneLayer({
   portalItem: {
-    id: 'a3de1ecf12ac40c18f12ba9900fb6d7b',
+    id: 'c7364b5cd79748e7866ea8eda9681d73',
   },
   elevationInfo: {
     mode: 'absolute-height', //absolute-height, relative-to-ground
