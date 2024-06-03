@@ -9,6 +9,12 @@ import {
 import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import Query from '@arcgis/core/rest/support/Query';
 import { view } from './Scene';
+import {
+  utilTypes,
+  utilStatusField,
+  utilTypeField,
+  utilePointTypeIcons,
+} from './StatusUniqueValues';
 
 // Updat date
 export async function dateUpdate() {
@@ -48,54 +54,83 @@ export async function dateUpdate() {
 const uitlType = ['Telecom', 'Water', 'Sewage', 'Power'];
 
 export async function generateUtilPointChartData({ contractp, company }: any) {
+  // // Query
+  // const qCP = "CP = '" + contractp + "'";
+  // const qCompany = "Company = '" + company + "'";
+  // const qCpCompany = qCP + ' AND ' + qCompany;
+  // const finalExpression = contractp && !company ? qCP : qCpCompany;
+  // var total_count_type = new StatisticDefinition({
+  //   onStatisticField: utilTypeField,
+  //   outStatisticFieldName: 'total_count_type',
+  //   statisticType: 'count',
+  // });
+  // var total_count_status = new StatisticDefinition({
+  //   onStatisticField: utilStatusField,
+  //   outStatisticFieldName: 'total_count_status',
+  //   statisticType: 'count',
+  // });
+  // var query = utilityPointLayer.createQuery();
+  // query.outFields = [utilTypeField, utilStatusField];
+  // query.outStatistics = [total_count_type, total_count_status];
+  // query.orderByFields = [utilTypeField, utilStatusField];
+  // query.groupByFieldsForStatistics = [utilTypeField, utilStatusField];
+  // query.where = finalExpression;
+  // return utilityPointLayer.queryFeatures(query).then((response: any) => {
+  //   var stats = response.features;
+  //   const data = stats.map((result: any, index: any) => {
+  //     const attributes = result.attributes;
+  //     const utiltype = attributes.UtilType;
+  //     const status_id = attributes.Status;
+  //     const count_status = attributes.total_count_status;
+  //     return Object.assign({
+  //       category: utilTypes[index + 1].type,
+  //       comp: status_id === 1 ? count_status : 0,
+  //       incomp: status_id === 0 ? count_status : 0,
+  //       icon: utilePointTypeIcons[index],
+  //     });
+  //   });
+  //   console.log(data);
+  // });
   var total_telecom_incomp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 1 and Status = 0) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_telecom_incomp',
     statisticType: 'sum',
   });
-
   var total_telecom_comp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 1 and Status = 1) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_telecom_comp',
     statisticType: 'sum',
   });
-
   var total_water_incomp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 2 and Status = 0) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_water_incomp',
     statisticType: 'sum',
   });
-
   var total_water_comp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 2 and Status = 1) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_water_comp',
     statisticType: 'sum',
   });
-
   var total_sewage_incomp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 3 and Status = 0) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_sewage_incomp',
     statisticType: 'sum',
   });
-
   var total_sewage_comp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 3 and Status = 1) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_sewage_comp',
     statisticType: 'sum',
   });
-
   var total_power_incomp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 4 and Status = 0) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_power_incomp',
     statisticType: 'sum',
   });
-
   var total_power_comp = new StatisticDefinition({
     onStatisticField: 'CASE WHEN (UtilType = 4 and Status = 1) THEN 1 ELSE 0 END',
     outStatisticFieldName: 'total_power_comp',
     statisticType: 'sum',
   });
-
   // Query
   var query = utilityPointLayer.createQuery();
   query.outStatistics = [
@@ -108,14 +143,11 @@ export async function generateUtilPointChartData({ contractp, company }: any) {
     total_power_incomp,
     total_power_comp,
   ];
-
   // Query
   const qCP = "CP = '" + contractp + "'";
   const qCompany = "Company = '" + company + "'";
   const qCpCompany = qCP + ' AND ' + qCompany;
-
   const finalExpression = contractp && !company ? qCP : qCpCompany;
-
   query.where = finalExpression;
   utilityPointLayer.definitionExpression = finalExpression;
   utilityPointLayer1.definitionExpression = finalExpression;
@@ -124,10 +156,8 @@ export async function generateUtilPointChartData({ contractp, company }: any) {
   utilityPointLayer1.visible = true;
   utilityLineLayer.visible = false;
   utilityLineLayer1.visible = false;
-
   // zoom to layer
   zoomToLayer(utilityPointLayer);
-
   return utilityPointLayer.queryFeatures(query).then((response: any) => {
     var stats = response.features[0].attributes;
     const telecom_incomp = stats.total_telecom_incomp;
@@ -138,7 +168,6 @@ export async function generateUtilPointChartData({ contractp, company }: any) {
     const sewage_comp = stats.total_sewage_comp;
     const power_incomp = stats.total_power_incomp;
     const power_comp = stats.total_power_comp;
-
     const data = [
       {
         category: uitlType[0],
