@@ -308,19 +308,6 @@ const Chart = ({ contractp, company, type }: any) => {
 
         const selectedStatus: number | null = fieldName === 'incomp' ? 0 : 1;
 
-        const sqlExpressionWithCP =
-          "CP = '" +
-          contractp +
-          "'" +
-          ' AND ' +
-          'UtilType = ' +
-          typeSelect +
-          ' AND ' +
-          'Status = ' +
-          selectedStatus;
-        // eslint-disable-next-line no-useless-concat
-        const sqlExpression = 'UtilType = ' + typeSelect + ' AND ' + 'Status = ' + selectedStatus;
-
         const qCp = "CP = '" + contractp + "'";
         const qCompany = "Company = '" + company + "'";
         const qType = "Type = '" + type.name + "'";
