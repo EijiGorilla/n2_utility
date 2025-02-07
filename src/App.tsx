@@ -34,7 +34,7 @@ import Chart from './components/Chart';
 import { DropDownData } from './customClass';
 import { utilityLineLayer, utilityPointLayer } from './layers';
 import { dateUpdate } from './Query';
-//import { DropDownData } from 'dropdown-package-react';
+import DropdownListDisplay, { DropdownDataProvider } from './components/DropdownContext';
 
 function App() {
   const [asOfDate, setAsOfDate] = useState<undefined | any | unknown>(null);
@@ -50,17 +50,6 @@ function App() {
   // Calcite switch for see-through-ground
   const [underground, setUnderground] = useState<boolean>(false);
 
-  // For dropdown filter
-  const [initContractPacakgeCompType, setInitContractPacakgeCompType] = useState([]);
-
-  const [contractPackage, setContractPackage] = useState<any>(null);
-  const [company, setCompany] = useState(null);
-  const [type, setType] = useState<null | undefined | string>(null);
-
-  const [companyList, setCompanyList] = useState([]);
-  const [typeList, setTypeList] = useState([]);
-  const [companySelected, setCompanySelected] = useState({ name: '' });
-
   //
   const [utilityPointLayerLoaded, setUtilityPointLayerLoaded] = useState<any>();
   useEffect(() => {
@@ -71,38 +60,10 @@ function App() {
 
   // Create dropdown list//
   useEffect(() => {
-    const dropdownData = new DropDownData({
-      featureLayers: [utilityPointLayer, utilityLineLayer],
-      fieldNames: ['CP', 'Company', 'Type'],
-    });
-
-    dropdownData.dropDownQuery().then((response: any) => {
-      setInitContractPacakgeCompType(response);
-    });
-
     dateUpdate().then((response: any) => {
       setAsOfDate(response);
     });
   }, []);
-
-  const handleContractPackageChange = (obj: any) => {
-    setContractPackage(obj);
-    setCompanyList(obj.field2);
-    setCompany(null);
-    setCompanySelected(obj);
-    setType(null);
-  };
-
-  const handleCompanyChange = (obj: any) => {
-    setCompanySelected(obj);
-    setCompany(obj);
-    setTypeList(obj.field3);
-    setType(null);
-  };
-
-  const handleTypeChange = (obj: any) => {
-    setType(obj);
-  };
 
   useEffect(() => {
     if (activeWidget) {
@@ -139,40 +100,13 @@ function App() {
     }
   }, []);
 
-  // Style CSS
-  const customstyles = {
-    option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => {
-      // const color = chroma(data.color);
-      return {
-        ...styles,
-        backgroundColor: isFocused ? '#555555' : isSelected ? '#2b2b2b' : '#2b2b2b',
-        color: '#ffffff',
-      };
-    },
-
-    control: (defaultStyles: any) => ({
-      ...defaultStyles,
-      backgroundColor: '#2b2b2b',
-      borderColor: '#949494',
-      height: 35,
-      width: '170px',
-      color: '#ffffff',
-    }),
-    singleValue: (defaultStyles: any) => ({ ...defaultStyles, color: '#fff' }),
-  };
-
   return (
     <>
       <CalciteShell>
         <CalciteTabs slot="panel-end" style={{ width: '25vw' }}>
-          {utilityPointLayerLoaded === 'loaded' && (
-            <Chart
-              contractp={contractPackage === null ? '' : contractPackage.field1}
-              company={companySelected.name}
-              type={type === null ? '' : type}
-              typelist={typeList}
-            />
-          )}
+          <DropdownDataProvider>
+            {utilityPointLayerLoaded === 'loaded' && <Chart />}
+          </DropdownDataProvider>
         </CalciteTabs>
         <header
           slot="header"
@@ -189,39 +123,9 @@ function App() {
           <b className="headerTitle">N2 UTILITY</b>
           <div className="date">{!asOfDate ? '' : 'As of ' + asOfDate}</div>
 
-          <div className="dropdownFilter">
-            <div className="dropdownFilterLayout">
-              <b style={{ color: 'white', margin: 10, fontSize: '0.9vw' }}></b>
-              <Select
-                placeholder="Select CP"
-                value={contractPackage}
-                options={initContractPacakgeCompType}
-                onChange={handleContractPackageChange}
-                getOptionLabel={(x: any) => x.field1}
-                styles={customstyles}
-              />
-              <br />
-              <b style={{ color: 'white', margin: 10, fontSize: '0.9vw' }}></b>
-              <Select
-                placeholder="Select Company"
-                value={company}
-                options={companyList}
-                onChange={handleCompanyChange}
-                getOptionLabel={(x: any) => x.name}
-                styles={customstyles}
-              />
-              <br />
-              <b style={{ color: 'white', margin: 10, fontSize: '0.9vw' }}></b>
-              <Select
-                placeholder="Select Type"
-                value={type}
-                options={typeList}
-                onChange={handleTypeChange}
-                getOptionLabel={(x: any) => x.name}
-                styles={customstyles}
-              />
-            </div>
-          </div>
+          {/* Dropdown List */}
+          <DropdownListDisplay />
+
           <img
             src="https://EijiGorilla.github.io/Symbols/Projec_Logo/GCR LOGO.png"
             alt="GCR Logo"

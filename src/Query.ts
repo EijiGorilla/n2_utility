@@ -9,12 +9,6 @@ import {
 import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import Query from '@arcgis/core/rest/support/Query';
 import { view } from './Scene';
-import {
-  utilTypes,
-  utilStatusField,
-  utilTypeField,
-  utilePointTypeIcons,
-} from './StatusUniqueValues';
 
 // Updat date
 export async function dateUpdate() {
@@ -394,7 +388,7 @@ export async function generatePointLineChartData({ contractp, company }: any) {
     utilityPointLayer1.visible = true;
   };
 
-  if (contractp === '') {
+  if (contractp === undefined) {
     query.where = '1=1';
     utilityPointLayer.definitionExpression = '1=1';
     utilityPointLayer1.definitionExpression = '1=1';
@@ -583,7 +577,7 @@ export async function generateTotalProgress({ contractp, company }: any) {
   const qCpCompany = qCP + ' AND ' + qCompany;
   const finalExpression = contractp && !company ? qCP : qCpCompany;
 
-  if (contractp === '') {
+  if (contractp === undefined) {
     query.where = '1=1';
   } else {
     query.where = finalExpression;
